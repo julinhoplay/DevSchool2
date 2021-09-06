@@ -15,6 +15,16 @@ app.get('/matricula', async (req, resp) => {
     }
 })
 
+app.post('/matricula', async(req, resp) => {
+    try {
+        let alunos = req.body;
+        let r = await db.tb_matricula.create({
+            nm_
+        })
+    }
+    
+})
+
 
 
 app.listen(process.env.PORT,
