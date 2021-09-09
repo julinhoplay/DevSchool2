@@ -11,19 +11,55 @@ app.get('/matricula', async (req, resp) => {
         let alunos = await db.tb_matricula.findAll();
         resp.send(alunos);
     } catch (e) {
-        resp.send({ erro: 'Ocorreu um erro!'})
+        resp.send({ erro: e.toString()})
     }
 })
 
 app.post('/matricula', async(req, resp) => {
     try {
         let alunos = req.body;
+        
         let r = await db.tb_matricula.create({
-            nm_
+         nm_aluno: alunos.nm_aluno,
+         nr_chamada: alunos.nr_chamada,
+         nm_curso: alunos.nm_curso,
+         nm_turma: alunos.nm_turma
+        
         })
+        resp.send(r);
+    } catch(e) {
+        resp.send({ erro: e.toString()  })
     }
-    
 })
+
+
+app.put('/matricula/:id', async(req, resp) => {
+    try {
+        let { nome, chamada, curso, turma } = req.body;
+        let { id } = req.params;
+        let r = await db.tb_matricula.update(
+            {
+                nm_aluno: nome,
+                nr_chamada: chamada,
+                nm_curso: curso,
+                nm_turma: turma
+            },
+            {
+                where: { id_matricula: id}
+            }
+            
+        )
+        resp.sendStatus(200);
+    } catch(e) {
+        resp.send({ erro: e.toString() })
+
+    }
+})
+        
+
+        
+    
+
 
 
 
